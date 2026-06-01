@@ -1,0 +1,24 @@
+---
+alwaysApply: true
+---
+
+---
+description: Security rules for exchange and financial systems
+alwaysApply: true
+---
+
+This is a financial system simulation. Treat all balance-changing operations as critical.
+
+Rules:
+- Every balance-changing operation must be idempotent.
+- Use database transactions for financial state changes.
+- Use double-entry ledger.
+- Never update balances without a ledger journal.
+- Use row-level locks or safe concurrency control for withdrawals and order placement.
+- All state transitions must be explicit.
+- Store audit logs for sensitive actions.
+- Never log secrets or private keys.
+- Add rate limiting for sensitive endpoints.
+- Add validation and authorization placeholders even in local mode.
+- Mainnet signing must be disabled by default.
+- Production docs must mention HSM, MPC, multisig, hot/cold wallet separation, withdrawal limits, and manual approval workflows.

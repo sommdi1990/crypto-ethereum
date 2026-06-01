@@ -1,0 +1,15 @@
+---
+description: Archive Cursor plans into docs/plans with sequential numbering
+alwaysApply: true
+---
+
+When creating or finalizing a project plan in Plan mode:
+
+- Save a copy under docs/plans/ using the next available 5-digit ID: 00001, 00002, ...
+- Filename format: docs/plans/NNNNN-<short-kebab-slug>.md
+- Include frontmatter: plan_id, title, status, created, phase, supersedes/superseded_by
+- Update docs/plans/README.md index after each new plan
+- Never reuse or renumber existing plan IDs
+- Never delete archived plans without explicit user approval
+- Cursor internal plan files (~/.cursor/plans/) are ephemeral; docs/plans/ is the project archive of record
+- User-facing explanation of this workflow belongs in docs/plans-fa.md (Persian)

@@ -1,0 +1,25 @@
+---
+alwaysApply: true
+---
+
+---
+description: Testing and quality rules
+alwaysApply: true
+---
+
+Testing requirements:
+- Unit tests for domain logic.
+- Unit tests for matching engine.
+- Unit tests for ledger accounting.
+- Unit tests for idempotency.
+- Integration tests for PostgreSQL repositories.
+- Integration tests for Ethereum local node when possible.
+- Foundry tests for contracts.
+
+Quality:
+- Run gofmt.
+- Run go test ./...
+- Add make targets or scripts for common commands.
+- Do not assume tests pass; inspect outputs.
+- Prefer deterministic tests.
+- Avoid tests that require mainnet.

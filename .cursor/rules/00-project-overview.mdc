@@ -1,0 +1,28 @@
+---
+description: Project overview for eth-exchange-lab
+alwaysApply: true
+---
+
+This project is called eth-exchange-lab.
+
+It is a Go + Ethereum + Solidity project for learning and demonstrating how a crypto exchange backend can interact with Ethereum.
+
+Main domains:
+- Wallets
+- Deposits
+- Withdrawals
+- Ledger
+- Orders
+- Trades
+- Matching engine
+- Blockchain scanner
+- Smart contracts
+
+The backend language is Go.
+The smart contract language is Solidity.
+User-facing documentation must be Persian.
+
+The project should be runnable locally with Docker Compose and Anvil.
+The project should also include production-readiness documentation, but production behavior must be disabled by default.
+
+Plan documents are archived under docs/plans/ with sequential numbering (00001+).

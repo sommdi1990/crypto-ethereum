@@ -1,0 +1,27 @@
+---
+alwaysApply: true
+---
+
+---
+description: No dangerous actions without approval
+alwaysApply: true
+---
+
+Never do these without explicit user approval:
+- Send a mainnet transaction.
+- Deploy to mainnet.
+- Use a real private key.
+- Print or expose secrets.
+- Delete project files.
+- Drop or truncate databases.
+- Run destructive migrations.
+- Run sudo.
+- Install global system tools.
+- Modify OS-level configuration.
+- Push to remote Git repository.
+- Change production config.
+- Disable security checks.
+
+When a command may be dangerous, explain the risk and ask for approval first.
+
+For local development, prefer Docker Compose and project-local tools.

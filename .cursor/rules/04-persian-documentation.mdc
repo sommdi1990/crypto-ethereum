@@ -1,0 +1,31 @@
+---
+alwaysApply: true
+---
+
+---
+description: Persian documentation rules
+alwaysApply: true
+globs:
+  - "**/*.md"
+---
+
+All user-facing documentation must be written in Persian.
+
+Documentation style:
+- Clear and practical.
+- Explain why each component exists.
+- Explain local run steps.
+- Explain production risks.
+- Explain what is safe and what is not safe.
+- Include diagrams where useful using Mermaid.
+- Include examples for exchange flows:
+  - deposit
+  - confirmation
+  - ledger credit
+  - order placement
+  - matching
+  - trade
+  - withdrawal
+  - reorg handling
+
+Do not write shallow placeholder documentation.

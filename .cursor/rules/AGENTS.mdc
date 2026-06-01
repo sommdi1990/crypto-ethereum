@@ -1,0 +1,30 @@
+---
+alwaysApply: true
+---
+
+# eth-exchange-lab Agent Instructions
+
+This project is a Go + Ethereum + Solidity learning and portfolio project.
+
+The goal is to build a production-minded mini crypto exchange backend with:
+- Go backend
+- Ethereum integration
+- ERC20 and Vault smart contracts
+- PostgreSQL ledger
+- Redis
+- Kafka/Redpanda
+- Local Anvil test chain
+- Persian documentation
+
+Core rules:
+- Do not perform dangerous actions without explicit user approval.
+- Do not use real private keys.
+- Do not send mainnet transactions.
+- Do not log secrets.
+- Do not assume commands succeeded; inspect outputs.
+- User-facing documentation must be Persian.
+- Backend must be Go.
+- Smart contracts must be Solidity with Foundry.
+- Keep financial operations idempotent and auditable.
+- Use double-entry ledger design.
+- Prefer clear, maintainable architecture over premature complexity.

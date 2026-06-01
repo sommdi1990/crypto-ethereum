@@ -1,0 +1,33 @@
+---
+alwaysApply: true
+---
+
+---
+description: Go backend coding rules
+alwaysApply: true
+globs:
+  - "**/*.go"
+---
+
+Use idiomatic Go.
+
+Rules:
+- Use context.Context for request-scoped and external operations.
+- Avoid global mutable state.
+- Return errors instead of panicking, except during startup.
+- Wrap errors with useful context.
+- Keep interfaces small and close to the package that consumes them.
+- Use table-driven tests.
+- Use gofmt and go vet.
+- Prefer explicit code over magical frameworks.
+- Keep domain logic independent from HTTP, database, Redis, Kafka, and Ethereum adapters.
+- Do not introduce unnecessary abstractions.
+- Avoid goroutine leaks.
+- Use graceful shutdown for long-running services.
+- Use structured logging.
+- Never log private keys, secrets, access tokens, or raw authorization headers.
+
+Architecture:
+- Prefer Clean Architecture / Hexagonal Architecture.
+- Domain layer must not depend on infrastructure.
+- Adapters implement interfaces required by application services.

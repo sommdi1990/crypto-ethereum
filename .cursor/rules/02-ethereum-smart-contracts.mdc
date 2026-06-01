@@ -1,0 +1,36 @@
+---
+alwaysApply: true
+---
+
+---
+description: Ethereum and Solidity rules
+alwaysApply: true
+globs:
+  - "contracts/**/*.sol"
+  - "script/**/*.sol"
+  - "test/**/*.sol"
+  - "**/*ethereum*"
+  - "**/*contract*"
+---
+
+Use Solidity 0.8.x.
+Use Foundry for build, tests, and local deployment.
+Use OpenZeppelin contracts for ERC20 and security primitives.
+
+Security rules:
+- Use ReentrancyGuard where external transfers are involved.
+- Use Pausable for emergency stop where appropriate.
+- Use Ownable or AccessControl for administrative operations.
+- Use Checks-Effects-Interactions.
+- Emit events for important state changes.
+- Do not hardcode production private keys.
+- Do not assume local test behavior equals mainnet behavior.
+- Do not deploy to mainnet unless explicitly approved by the user.
+
+Backend Ethereum rules:
+- Use github.com/ethereum/go-ethereum.
+- Verify chain ID at startup.
+- Deduplicate events by chain_id + tx_hash + log_index.
+- Wait for configurable confirmations before final credit.
+- Handle reorgs.
+- Use timeouts, retries, and circuit breakers around RPC calls.
