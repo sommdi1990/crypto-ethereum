@@ -9,7 +9,7 @@ RPC_URL="${ETH_RPC_URL:-http://localhost:8545}"
 echo "==> Deploying to $RPC_URL ..."
 cd contracts
 if [ ! -d lib/openzeppelin-contracts ]; then
-  forge install OpenZeppelin/openzeppelin-contracts --no-commit
+  ../scripts/contracts-build.sh
 fi
 forge script script/DeployLocal.s.sol:DeployLocal --rpc-url "$RPC_URL" --broadcast -vvv
 echo "==> Addresses written to deployments/local.json"

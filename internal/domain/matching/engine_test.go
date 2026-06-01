@@ -37,7 +37,14 @@ func TestEngine_PartialFill(t *testing.T) {
 	result := engine.SubmitOrder(buy)
 
 	require.Len(t, result.Trades, 1)
-	require.Equal(t, domainorder.StatusPartiallyFilled, result.UpdatedOrders[len(result.UpdatedOrders)-1].Status)
+	// incoming buy is fully filled; resting sell remains partially filled
+	var sellStatus domainorder.Status
+	for _, o := range result.UpdatedOrders {
+		if o.Side == domainorder.SideSell {
+			sellStatus = o.Status
+		}
+	}
+	require.Equal(t, domainorder.StatusPartiallyFilled, sellStatus)
 }
 
 func newLimitOrder(side domainorder.Side, price, qty string) domainorder.Order {

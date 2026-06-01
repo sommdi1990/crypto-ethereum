@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 )
 
 type txKey struct{}
@@ -45,7 +46,7 @@ func querier(ctx context.Context, db *DB) pgx.Tx {
 }
 
 func exec(ctx context.Context, db *DB) interface {
-	Exec(context.Context, string, ...any) (pgx.CommandTag, error)
+	Exec(context.Context, string, ...any) (pgconn.CommandTag, error)
 	Query(context.Context, string, ...any) (pgx.Rows, error)
 	QueryRow(context.Context, string, ...any) pgx.Row
 } {

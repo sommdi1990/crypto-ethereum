@@ -15,7 +15,7 @@ import (
 	"github.com/shopspring/decimal"
 
 	ethadapter "github.com/soroush/eth-exchange-lab/internal/adapters/ethereum"
-	"github.com/soroush/eth-exchange-lab/internal/application/deposit"
+	depositsvc "github.com/soroush/eth-exchange-lab/internal/application/deposit"
 	"github.com/soroush/eth-exchange-lab/internal/application/ports"
 )
 
@@ -28,7 +28,7 @@ type Service struct {
 	blockchain        ports.BlockchainRepository
 	wallets           ports.WalletRepository
 	deposits          ports.DepositRepository
-	depositSvc        *deposit.Service
+	depositSvc        *depositsvc.Service
 	assets            ports.AssetRepository
 	outbox            ports.OutboxRepository
 	confirmationCount int
@@ -38,7 +38,7 @@ type Service struct {
 }
 
 // New creates a block scanner service.
-func New(log zerolog.Logger, eth *ethadapter.Client, chainID int64, vaultAddress string, blockchain ports.BlockchainRepository, wallets ports.WalletRepository, deposits ports.DepositRepository, depositSvc *deposit.Service, assets ports.AssetRepository, outbox ports.OutboxRepository, confirmationCount int, startBlock uint64, pollInterval time.Duration) *Service {
+func New(log zerolog.Logger, eth *ethadapter.Client, chainID int64, vaultAddress string, blockchain ports.BlockchainRepository, wallets ports.WalletRepository, deposits ports.DepositRepository, depositSvc *depositsvc.Service, assets ports.AssetRepository, outbox ports.OutboxRepository, confirmationCount int, startBlock uint64, pollInterval time.Duration) *Service {
 	return &Service{
 		log: log, eth: eth, chainID: chainID,
 		vaultAddress: common.HexToAddress(vaultAddress),

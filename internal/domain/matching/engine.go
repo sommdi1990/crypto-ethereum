@@ -109,6 +109,9 @@ func (e *Engine) SubmitOrder(o domainorder.Order) MatchResult {
 		contra.filled = contra.filled.Add(fillQty)
 
 		if contra.remaining().IsPositive() {
+			contra.order.FilledQty = contra.filled
+			contra.order.Status = domainorder.StatusPartiallyFilled
+			result.UpdatedOrders = append(result.UpdatedOrders, contra.order)
 			e.push(contra)
 		} else {
 			contra.order.Status = domainorder.StatusFilled

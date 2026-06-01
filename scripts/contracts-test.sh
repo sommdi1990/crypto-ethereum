@@ -7,7 +7,7 @@ exec > >(tee -a "$OUT") 2>&1
 
 cd contracts
 if [ ! -d lib/openzeppelin-contracts ]; then
-  forge install OpenZeppelin/openzeppelin-contracts --no-commit
+  ../scripts/contracts-build.sh
 fi
 echo "==> Running Foundry tests..."
 forge test -vv

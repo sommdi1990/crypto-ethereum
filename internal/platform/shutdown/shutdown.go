@@ -8,7 +8,7 @@ import (
 )
 
 // WaitForSignal blocks until SIGINT or SIGTERM is received.
-func WaitForSignal() context.Context {
+func WaitForSignal() (context.Context, context.CancelFunc) {
 	ctx, cancel := context.WithCancel(context.Background())
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
@@ -16,5 +16,5 @@ func WaitForSignal() context.Context {
 		<-ch
 		cancel()
 	}()
-	return ctx
+	return ctx, cancel
 }
