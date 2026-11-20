@@ -1,38 +1,13 @@
-# eth-exchange-lab
+# Ethereum exchange backend lab
 
-یک پروژهٔ یادگیری و portfolio برای ساخت **backend صرافی رمزارز** با Go، Ethereum، و PostgreSQL — با تمرکز بر الگوهای production-minded و مستندات فارسی.
+A Go exchange model combines an in-memory order book, a ledger and adapters for PostgreSQL and Ethereum. The matching engine accepts and cancels orders for a market and exposes bid and ask snapshots.
 
-## این پروژه چیست؟
+The order book uses heaps and a sequence counter. The domain tests exercise matching separately from storage. PostgreSQL migrations define durable records, and a separate scanner adapter reads blockchain data. The repository presents these components as a learning implementation.
 
-**eth-exchange-lab** شبیه‌سازی یک صرافی centralized کوچک است که:
-
-- واریز **on-chain** (ETH / MockUSDT) را از قرارداد **ExchangeVault** می‌خواند
-- موجودی کاربر را **off-chain** در **دفتر کل دوطرفه** (PostgreSQL) نگه می‌دارد
-- سفارش‌ها را **off-chain match** می‌کند
-- برداشت را با **workflow تأیید** و (اختیاری) امضای operator انجام می‌دهد
-
-```mermaid
-flowchart TB
-    subgraph onchain [On-Chain]
-        V[ExchangeVault]
-        T[MockUSDT]
-    end
-
-    subgraph offchain [Off-Chain Backend]
-        S[Scanner]
-        L[Ledger]
-        M[Matcher]
-        API[REST API]
-    end
-
-    User((کاربر)) --> V
-    S --> V
-    S --> L
-    API --> L
-    API --> M
-    M --> L
-    API --> V
-```
+- [engine.go](internal/domain/matching/engine.go)
+- [engine_test.go](internal/domain/matching/engine_test.go)
+- [scanner.go](internal/adapters/scanner/scanner.go)
+- [000001_init.up.sql](migrations/000001_init.up.sql)
 
 ## چرا Go؟
 
@@ -54,18 +29,6 @@ flowchart TB
 
 **MockUSDT** فقط برای Anvil — جایگزین USDT mainnet نیست.
 
-## Tech stack
-
-| لایه | تکنولوژی |
-|------|-----------|
-| Backend | Go 1.22+ |
-| API | net/http (stdlib) |
-| DB | PostgreSQL 16 |
-| Cache/Lock | Redis 7 |
-| Events | Redpanda (Kafka API) |
-| Chain local | Anvil (Foundry) |
-| Contracts | Solidity 0.8 + OpenZeppelin |
-
 ## ساختار repo
 
 ```
@@ -79,33 +42,6 @@ docs/                    — مستندات فارسی
 scripts/                 — dev-up, deploy, demo
 ```
 
-## راه‌اندازی سریع
-
-```bash
-# 1. زیرساخت
-./scripts/dev-up.sh
-
-# 2. قراردادها
-./scripts/contracts-build.sh
-./scripts/contracts-deploy-local.sh
-
-# 3. تنظیم env
-cp .env.example .env
-# آدرس‌های deployments/local.json را در .env بگذارید
-
-# 4. API
-./scripts/backend-run.sh
-```
-
-Health:
-
-```bash
-curl http://localhost:8080/health/live
-curl http://localhost:8080/health/ready
-```
-
-راهنمای کامل: [docs/local-run-fa.md](docs/local-run-fa.md)
-
 ## API نمونه
 
 | Method | Path | توضیح |
@@ -116,24 +52,6 @@ curl http://localhost:8080/health/ready
 | POST | `/api/v1/orders` | سفارش (Idempotency-Key) |
 | POST | `/api/v1/withdrawals` | درخواست برداشت |
 | POST | `/api/v1/admin/withdrawals/{id}/approve` | تأیید admin (local) |
-
-## مستندات
-
-| سند | موضوع |
-|-----|--------|
-| [architecture-fa.md](docs/architecture-fa.md) | معماری Clean/Hexagonal |
-| [local-run-fa.md](docs/local-run-fa.md) | اجرای محلی |
-| [smart-contracts-fa.md](docs/smart-contracts-fa.md) | Vault و MockUSDT |
-| [exchange-scenario-fa.md](docs/exchange-scenario-fa.md) | جریان کامل صرافی |
-| [ledger-fa.md](docs/ledger-fa.md) | حسابداری دوطرفه |
-| [blockchain-scanner-fa.md](docs/blockchain-scanner-fa.md) | scanner و reorg |
-| [withdrawal-flow-fa.md](docs/withdrawal-flow-fa.md) | state machine برداشت |
-| [security-fa.md](docs/security-fa.md) | secrets و auth placeholder |
-| [production-readiness-fa.md](docs/production-readiness-fa.md) | gapهای production |
-| [private-key-management-fa.md](docs/private-key-management-fa.md) | hot/cold و Anvil |
-| [plans-fa.md](docs/plans-fa.md) | بایگانی طرح‌ها |
-| [cursor-rules-fa.md](docs/cursor-rules-fa.md) | قوانین Cursor |
-| [interview-notes-fa.md](docs/interview-notes-fa.md) | نکات مصاحبه |
 
 ## پیش‌فرض‌های امنیتی
 
@@ -159,24 +77,6 @@ ENABLE_MAINNET=false
 
 این **عمدی** است: lab برای یادگیری با safety gate.
 
-## Makefile
-
-```bash
-make help
-make test
-make dev-up
-make contracts-test
-make run
-```
-
-## طرح‌های معماری
-
-فهرس: [docs/plans/README.md](docs/plans/README.md) — طرح ۰۰۰۰۱ Phase 0.
-
 ## مجوز و هدف
 
 پروژهٔ آموزشی/portfolio — نه توصیه مالی. استفاده از mainnet با دارایی واقعی بدون بازطراحی **توصیه نمی‌شود**.
-
-## AGENTS
-
-دستورالعمل agentها: [AGENTS.md](AGENTS.md)
